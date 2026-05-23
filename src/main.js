@@ -114,25 +114,23 @@ function drawClock(ctx) {
 
 function drawPointers(ctx, hours, minutes, seconds) {
 
-    // ponteiro de horas
-    // angulo ponteiro horas [(hora em segundos)/43200] * [Math.PI * 2]
-    // centro do relógio segurando os ponteiros
+    // ponteiro de segundos
     ctx.beginPath()
 
-    var cosNum = Math.cos((hours/43200)*(Math.PI*2))
-    var sinNum = Math.sin((hours/43200)*(Math.PI*2))
+    cosNum = Math.cos((seconds/60)*(Math.PI*2))
+    sinNum = Math.sin((seconds/60)*(Math.PI*2))
 
-    var startX = (width/2) + 1 * cosNum
-    var startY = (height/2) + 1 * sinNum
+    startX = (width/2) + 1 * cosNum
+    startY = (height/2) + 1 * sinNum
 
-    var endX = (width/2) + 80 * cosNum
-    var endY = (height/2) + 80 * sinNum
+    endX = (width/2) + 130 * cosNum
+    endY = (height/2) + 130 * sinNum
 
     ctx.moveTo(startX, startY)
     ctx.lineTo(endX, endY)
 
-    ctx.lineWidth = 8
-    ctx.strokeStyle = 'red'
+    ctx.lineWidth = 2
+    ctx.strokeStyle = 'black'
     ctx.lineCap = 'round'
     ctx.stroke()
 
@@ -161,23 +159,25 @@ function drawPointers(ctx, hours, minutes, seconds) {
 
     ctx.closePath()
 
-    // ponteiro de segundos
+    // ponteiro de horas
+    // angulo ponteiro horas [(hora em segundos)/43200] * [Math.PI * 2]
+    // centro do relógio segurando os ponteiros
     ctx.beginPath()
 
-    cosNum = Math.cos((seconds/60)*(Math.PI*2))
-    sinNum = Math.sin((seconds/60)*(Math.PI*2))
+    var cosNum = Math.cos((hours/43200)*(Math.PI*2))
+    var sinNum = Math.sin((hours/43200)*(Math.PI*2))
 
-    startX = (width/2) + 1 * cosNum
-    startY = (height/2) + 1 * sinNum
+    var startX = (width/2) + 1 * cosNum
+    var startY = (height/2) + 1 * sinNum
 
-    endX = (width/2) + 130 * cosNum
-    endY = (height/2) + 130 * sinNum
+    var endX = (width/2) + 80 * cosNum
+    var endY = (height/2) + 80 * sinNum
 
     ctx.moveTo(startX, startY)
     ctx.lineTo(endX, endY)
 
-    ctx.lineWidth = 2
-    ctx.strokeStyle = 'black'
+    ctx.lineWidth = 8
+    ctx.strokeStyle = 'red'
     ctx.lineCap = 'round'
     ctx.stroke()
 
@@ -208,10 +208,10 @@ function updateClockTime() {
         
         drawClock(ctx)
 
-        var hoursInSeconds = (hours - 3) * 3600
-        var minutesInSeconds = (minutes - 15) * 60
+        var hoursInSeconds = ((hours - 3) * 3600) + ((minutes - 15) * 60) + seconds - 15
+        var minutesInSeconds = ((minutes - 15) * 60) + seconds - 15
 
-        drawPointers(ctx, hoursInSeconds, minutesInSeconds, seconds)
+        drawPointers(ctx, hoursInSeconds, minutesInSeconds, seconds - 15)
 
     } else {
 
