@@ -87,6 +87,39 @@ function drawClock() {
             ctx.closePath()
 
         }
+
+        // linhas dos minutos do relógio
+        for(var i = 0; i < 60; i++) {
+
+            ctx.beginPath()
+
+            const cosNum = Math.cos((i/60)*(Math.PI*2))
+            const sinNum = Math.sin((i/60)*(Math.PI*2))
+
+            const startRadius = ((width / 2) - 10)
+            const endRadius = ((width / 2) - 15)
+
+            const startX = (width / 2) + startRadius * cosNum
+            const startY = (height / 2) + startRadius * sinNum
+
+            const endX = (width / 2) + endRadius * cosNum
+            const endY = (height / 2) + endRadius * sinNum
+        
+            ctx.moveTo(startX, startY)
+            ctx.lineTo(endX, endY)
+
+            ctx.lineWidth = 2
+
+            const minutesList = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+
+            if(!minutesList.includes(i)) {
+                ctx.stroke()
+            }
+
+    
+            ctx.closePath()
+
+        }
     
     } else {
 
