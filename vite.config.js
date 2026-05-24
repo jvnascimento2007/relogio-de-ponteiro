@@ -1,3 +1,3 @@
 export default {
-    base: '/relogio-de-ponteiro'
+    base: '/relogio-de-ponteiro/'
 }
