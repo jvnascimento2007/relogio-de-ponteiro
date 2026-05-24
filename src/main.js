@@ -271,7 +271,7 @@ function backwardSeconds() {
 
     if(seconds < 0) {
 
-        seconds = 0
+        seconds = 59
         backwardMinutes()
 
     }
