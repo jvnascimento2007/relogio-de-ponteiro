@@ -193,14 +193,104 @@ function drawPointers(ctx, hours, minutes, seconds) {
 
 }
 
-function updateClockTime() {
+const now = new Date()
+var hours = now.getHours()
+var minutes = now.getMinutes()
+var seconds = now.getSeconds()
 
-    const now = new Date()
-    const hours = now.getHours()
-    const minutes = now.getMinutes()
-    const seconds = now.getSeconds()
-    
+function updateTimeText() {
     hourMinuteSeconds.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+}
+
+function forwardHours() {
+
+    hours++
+
+    if(hours >= 24) {
+
+        hours = 0
+
+    }
+
+}
+
+function forwardMinutes() {
+
+    minutes++
+
+    if(minutes >= 60) {
+
+        minutes = 0
+        forwardHours()
+
+    }
+
+}
+
+function forwardSeconds() {
+
+    seconds++
+
+    if(seconds >= 60) {
+
+        seconds = 0
+        forwardMinutes()
+
+    }
+
+}
+
+function backwardHours() {
+
+    hours--
+
+    if(hours < 0) {
+
+        hours = 23
+
+    }
+
+}
+
+function backwardMinutes() {
+
+    minutes--
+
+    if(minutes < 0) {
+
+        minutes = 59
+        backwardHours()
+
+    }
+
+}
+
+function backwardSeconds() {
+
+    seconds--
+
+    if(seconds < 0) {
+
+        seconds = 0
+        backwardMinutes()
+
+    }
+
+}
+
+function updateClockTime() {   
+
+    forwardSeconds()
+
+    updateTimeText()
+    
+    setTimeout(updateClockTime, 1000)
+}
+
+updateTimeText()
+setTimeout(updateClockTime, 1000)
+
+function updateClockAnimation() {
 
     if(canvas.getContext('2d')) {
 
@@ -208,8 +298,8 @@ function updateClockTime() {
         
         drawClock(ctx)
 
-        var hoursInSeconds = ((hours - 3) * 3600) + ((minutes - 15) * 60) + seconds - 15
-        var minutesInSeconds = ((minutes - 15) * 60) + seconds - 15
+        var hoursInSeconds = ((hours - 3) * 3600) + ((minutes) * 60) + seconds
+        var minutesInSeconds = ((minutes - 15) * 60) + seconds
 
         drawPointers(ctx, hoursInSeconds, minutesInSeconds, seconds - 15)
 
@@ -219,8 +309,78 @@ function updateClockTime() {
 
     }
     
-    window.requestAnimationFrame(updateClockTime)
+    window.requestAnimationFrame(updateClockAnimation)
 
 }
 
-window.requestAnimationFrame(updateClockTime)
+window.requestAnimationFrame(updateClockAnimation)
+
+// controle de tempo
+const timeModeList = ['SEGUNDOS', 'MINUTOS', 'HORAS']
+var timeMode = 0
+
+const timeModeButton = document.querySelector('#time-mode')
+function timeModeClick(e) {
+    timeMode++
+
+    if(timeMode >= timeModeList.length) {
+
+        timeMode = 0
+
+    }
+
+    e.target.innerHTML = `${timeModeList[timeMode]}`
+}
+timeModeButton.addEventListener('click', timeModeClick)
+
+const timeBackwardButton = document.querySelector('#time-backward')
+function timeBackwardClick() {
+
+    if(timeMode == 0) { // modo SEGUNDOS
+
+        backwardSeconds()
+
+    }
+
+    if(timeMode == 1) { // modo MINUTOS
+
+        backwardMinutes()
+
+    }
+
+    if(timeMode == 2) { // modo HORAS
+
+        backwardHours()
+
+    }
+    
+    updateTimeText()
+
+}
+timeBackwardButton.addEventListener('click', timeBackwardClick)
+
+const timeForwardButton = document.querySelector('#time-forward')
+function timeForwardClick() {
+
+    if(timeMode == 0) { // modo SEGUNDOS
+
+        forwardSeconds()
+
+    }
+
+    if(timeMode == 1) { // modo MINUTOS
+
+        forwardMinutes()
+
+    }
+
+    if(timeMode == 2) { // modo HORAS
+
+        forwardHours()
+
+    }
+
+    updateTimeText()
+
+}
+timeForwardButton.addEventListener('click', timeForwardClick)

@@ -8,7 +8,12 @@
 <body>
     <main>
         <h1>Relógio de Ponteiro</h1>
-        <p id="hour-minute-second"></p>
+        <div id="time-control">
+            <button id="time-backward">&lt;</button>
+            <p id="hour-minute-second"></p>
+            <button id="time-forward">&gt;</button>
+            <button id="time-mode">SEGUNDOS</button>
+        </div>
         <canvas id="canvas" width="300" height="300">Conteúdo não suportado pelo navegador!</canvas>
     </main>
     <script type="module" src="src/main.js"></script>

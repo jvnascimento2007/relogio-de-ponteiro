@@ -25,9 +25,40 @@ h1 {
 }
 
 p {
+    font: bold 1.8em monospace;
+}
+
+#canvas {
+    image-rendering: pixelated;
+}
+
+#time-control {
+    display: flex;
+    gap: 10px;
     margin-bottom: 20px;
 }
 
-canvas {
-    image-rendering: pixelated;
+#time-forward, #time-backward {
+
+    padding: 0 5px;
+
+}
+
+#time-mode {
+    width: 100px;
+}
+
+@media (min-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+    }
+
+    p {
+        font-size: 2.5em;
+    }
+
+    #canvas {
+        width: 600px;
+        height: 600px;
+    }
 }
